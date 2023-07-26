@@ -23,6 +23,11 @@ serial_print_char:
 ;
 serial_print_string:
     push ax
+    push bx
+
+    mov ax, ' '
+    call serial_print_char
+
     jmp serial_print_string_loop
 
 serial_print_string_loop:
@@ -34,5 +39,9 @@ serial_print_string_loop:
     jmp serial_print_string_loop
 
 serial_print_string_end:
+    mov ax, ','
+    call serial_print_char
+
     pop ax
+    pop bx
     ret
