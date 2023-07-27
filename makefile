@@ -24,6 +24,8 @@ os-image: bootloader
 	dd if=/dev/zero of=os-image.img bs=512 count=2880
 	dd if=$(BIN_DIR)/bootloader_stage_1.bin of=os-image.img bs=512 count=1 conv=notrunc
 	dd if=$(BIN_DIR)/bootloader_stage_2.bin of=os-image.img bs=512 seek=1 conv=notrunc
+	
+#	dd if=$(BIN_DIR)/kernel.bin of=os-image.img bs=512 seek=5 conv=notrunc
 
 bootloader: $(BL_DIR)/$(BL_STAGE_1_DIR)/$(BL_STAGE_1_SRC) $(BL_DIR)/$(BL_STAGE_2_DIR)/$(BL_STAGE_2_SRC)
 	nasm -f bin $(BL_DIR)/$(BL_STAGE_1_DIR)/bootloader_stage_1.asm -o $(BIN_DIR)/bootloader_stage_1.bin

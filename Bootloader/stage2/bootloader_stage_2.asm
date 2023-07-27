@@ -1,16 +1,20 @@
 [org 0x1100]
+[bits 16]
 
 mov bx, STATUS_STAGE_2_ENTRY_MSG
 call serial_print_string
 
-; Configure VESA graphics mode
-mov ax, 0x0            ; AX = 0x0000 (null segment)
-mov es, ax             ; Set ES = 0x0000, pointing to the data segment (e.g., .bss)
+; Set VBE mode 1024x768, 16bit color depth and enable LFB
+call vbe_set_mode
 
-; Load the offset of vbe_info_block into DI
-lea di, [vbe_info_block]
+; Load Kernel
+mov bx, KERNEL_OFFSET ; Set -up parameters for our disk_load routine , so
+mov cl, 0x06 ; Start reading from 6th sector
+mov dh, 15 ; that we load sectors 6 to 15
+mov dl, [BOOT_DRIVE] ; from the boot disk ( i.e. our
+call disk_load ; stage 2 code ) to address KERNEL_OFFSET
 
-call check_vbe_support
+; 
 
 mov bx, STATUS_STAGE_2_EXIT_MSG
 call serial_print_string
@@ -21,17 +25,10 @@ hlt
 ; DATA DECLARATIONS
 BOOT_DRIVE equ 0x1000
 LFB_START equ 0x400
+KERNEL_OFFSET equ 0x2000
 
 STATUS_STAGE_2_ENTRY_MSG: db '<Bootloader Stage 2>', 0
 STATUS_STAGE_2_EXIT_MSG: db '</Bootloader Stage 2>', 0
-
-VBE_SIG: db 'VBE2'
-VESA_SIG: db 'VESA'
-VBE_VERSION: db 0x02
-VBE_SUPPORT_ERROR: db 'VBE not supported', 0
-VBE_SUPPORT_SUCCESS: db 'VBE supported', 0
-vbe_info_block resb 512
-vbe_mode_info_block resb 256
 
 ; INCLUDES
 %include "bootloader/stage2/lib/serial_io.asm"
