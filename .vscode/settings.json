@@ -1,0 +1,6 @@
+{
+    "C_Cpp.default.compilerPath": "D:/i686-elf-tools-windows/bin/i686-elf-gcc.exe",
+    "files.associations": {
+        "stdlowlevel.h": "c"
+    }
+}

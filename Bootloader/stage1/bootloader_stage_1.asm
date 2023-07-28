@@ -17,7 +17,7 @@ call serial_print_string
 
 mov bx, STAGE_2_OFFSET ; Set -up parameters for our disk_load routine , so
 mov cl, 0x02 ; Start reading from second sector
-mov dh, 5 ; that we load the first 5 sectors ( excluding
+mov dh, 3 ; that we load the first 5 sectors ( excluding
 mov dl, [BOOT_DRIVE] ; the boot sector ) from the boot disk ( i.e. our
 call disk_load ; stage 2 code ) to address STAGE_2_OFFSET
 
