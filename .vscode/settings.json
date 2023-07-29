@@ -1,6 +1,6 @@
 {
-    // "C_Cpp.default.compilerPath": "D:/i686-elf-tools-windows/bin/i686-elf-gcc.exe",
-    "C_Cpp.default.compilerPath": "C:/Users/Wutpups/Desktop/OSDev/bin/i686-elf-tools-windows/bin/i686-elf-gcc.exe",
+    "C_Cpp.default.compilerPath": "D:/i686-elf-tools-windows/bin/i686-elf-gcc.exe",
+    // "C_Cpp.default.compilerPath": "C:/Users/Wutpups/Desktop/OSDev/bin/i686-elf-tools-windows/bin/i686-elf-gcc.exe",
     "files.associations": {
         "stdlowlevel.h": "c"
     }

@@ -1,16 +1,17 @@
-# CC:=D:/i686-elf-tools-windows/bin/i686-elf-gcc.exe
-CC:=C:/Users/Wutpups/Desktop/OSDev/bin/i686-elf-tools-windows/bin/i686-elf-gcc.exe
+CC:=D:/i686-elf-tools-windows/bin/i686-elf-gcc.exe
+# CC:=C:/Users/Wutpups/Desktop/OSDev/bin/i686-elf-tools-windows/bin/i686-elf-gcc.exe
 CFLAGS:=-ffreestanding
+CFLAGS_OPT:=-fauto-inc-dec -fbranch-count-reg -fcombine-stack-adjustments -fcompare-elim -fcprop-registers -fdce -fdefer-pop -fdelayed-branch -fdse -fforward-propagate -fguess-branch-probability -fif-conversion -fif-conversion2 -finline-functions-called-once -fvect-cost-model=cheap -fipa-profile -fipa-pure-const -fipa-reference -fmerge-constants -fmove-loop-invariants -fomit-frame-pointer -freorder-blocks -fshrink-wrap -fshrink-wrap-separate -fsplit-wide-types -fssa-backprop -fssa-phiopt -ftree-bit-ccp -ftree-ccp -ftree-ch -ftree-coalesce-vars -ftree-copy-prop -ftree-dce -ftree-dominator-opts -ftree-dse -ftree-forwprop -ftree-fre -ftree-phiprop -ftree-pta -ftree-scev-cprop -ftree-sink -ftree-slsr -ftree-sra -ftree-ter -funit-at-a-time -falign-functions -falign-jumps -falign-labels -falign-loops -fcaller-saves -fcode-hoisting -fcrossjumping -fcse-follow-jumps -fcse-skip-blocks -fdelete-null-pointer-checks -fdevirtualize -fdevirtualize-speculatively -fexpensive-optimizations -fgcse -fgcse-lm -fhoist-adjacent-loads -finline-functions -finline-small-functions -findirect-inlining -fipa-bit-cp -fipa-cp -fipa-icf -fipa-ra -fipa-sra -fipa-vrp -fisolate-erroneous-paths-dereference -flra-remat -foptimize-sibling-calls -foptimize-strlen -fpartial-inlining -fpeephole2 -freorder-blocks-algorithm=stc -freorder-blocks-and-partition -freorder-functions -frerun-cse-after-loop -fschedule-insns -fschedule-insns2 -fsched-interblock -fsched-spec -fstore-merging -fstrict-aliasing -fthread-jumps -ftree-builtin-call-dce -ftree-loop-vectorize -ftree-pre -ftree-slp-vectorize -ftree-switch-conversion -ftree-tail-merge -ftree-vrp -fgcse-after-reload -fipa-cp-clone -floop-interchange -floop-unroll-and-jam -fpeel-loops -fpredictive-commoning -fsplit-loops -fsplit-paths -ftree-loop-distribution -ftree-partial-pre -funswitch-loops -fvect-cost-model=dynamic -ffreestanding
 CFLAGS_DEBUG:=-ffreestanding -g
 
-# AS:=D:/NASM/bin/nasm.exe
-AS:=C:/Users/Wutpups/Desktop/OSDev/bin/nasm-2.16.01-win64/nasm-2.16.01/nasm.exe
+AS:=D:/NASM/nasm.exe
+# AS:=C:/Users/Wutpups/Desktop/OSDev/bin/nasm-2.16.01-win64/nasm-2.16.01/nasm.exe
 
-# LD:=D:/i686-elf-tools-windows/bin/i686-elf-ld.exe
-LD:=C:/Users/Wutpups/Desktop/OSDev/bin/i686-elf-tools-windows/bin/i686-elf-ld.exe
+LD:=D:/i686-elf-tools-windows/bin/i686-elf-ld.exe
+# LD:=C:/Users/Wutpups/Desktop/OSDev/bin/i686-elf-tools-windows/bin/i686-elf-ld.exe
 
-# DD:=dd
-DD:=C:/Users/Wutpups/Desktop/OSDev/bin/dd.exe
+DD:=dd
+# DD:=C:/Users/Wutpups/Desktop/OSDev/bin/dd.exe
 
 BIN_DIR:=bin
 
@@ -30,7 +31,7 @@ LIBC_DIR:=libc
 LIBC_SRC:=$(LIBC_DIR)/stdlowlevel.c $(LIBC_DIR)/stdserialio.c $(LIBC_DIR)/stdmem.c
 
 qemu: os-image
-	qemu-system-i386 -hda os-image.img
+	qemu-system-i386 -device virtio-gpu -hda os-image.img
 
 os-image: bootloader kernel
 	$(DD) if=/dev/zero of=os-image.img bs=512 count=2880
