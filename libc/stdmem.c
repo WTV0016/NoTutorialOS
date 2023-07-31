@@ -1,6 +1,6 @@
 #include"stdmem.h"
 
-void* memcpySwap(void* restrict dstptr, const void* restrict srcptr, int size) {
+void* memcpy(void* restrict dstptr, const void* restrict srcptr, int size) {
 	unsigned int* dst = (unsigned int*) dstptr;
 	const unsigned int* src = (const unsigned int*) srcptr;
 	for (int i = 0; i < size; i++)

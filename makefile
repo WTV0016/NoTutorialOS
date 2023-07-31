@@ -28,7 +28,7 @@ KERNEL_SRC:=$(KERNEL_DIR)/kernel.c $(KERNEL_DIR)/kernel_entry.asm
 
 # Libc variables
 LIBC_DIR:=libc
-LIBC_SRC:=$(LIBC_DIR)/stdlowlevel.c $(LIBC_DIR)/stdserialio.c $(LIBC_DIR)/stdmem.c
+LIBC_SRC:=$(LIBC_DIR)/stdlowlevel.c $(LIBC_DIR)/stdserialio.c $(LIBC_DIR)/stdmem.c $(LIBC_DIR)/stddraw.c $(LIBC_DIR)/stdmath.c
 
 qemu: os-image
 	qemu-system-i386 -device virtio-gpu -hda os-image.img
@@ -47,12 +47,14 @@ bootloader: $(BL_DIR)/$(BL_STAGE_1_DIR)/$(BL_STAGE_1_SRC) $(BL_DIR)/$(BL_STAGE_2
 kernel: $(KERNEL_SRC) libc
 	$(AS) $(KERNEL_DIR)/kernel_entry.asm -f elf -o $(BIN_DIR)/kernel_entry.o
 	$(CC) $(CFLAGS) -c $(KERNEL_DIR)/kernel.c -o $(BIN_DIR)/kernel.o
-	$(LD) -o $(BIN_DIR)/kernel.bin -Ttext 0x2000 $(BIN_DIR)/kernel_entry.o $(BIN_DIR)/kernel.o $(BIN_DIR)/stdmem.o $(BIN_DIR)/stdserialio.o $(BIN_DIR)/stdlowlevel.o --oformat binary
+	$(LD) -o $(BIN_DIR)/kernel.bin -Ttext 0x2000 $(BIN_DIR)/kernel_entry.o $(BIN_DIR)/kernel.o $(BIN_DIR)/stdmem.o $(BIN_DIR)/stdserialio.o $(BIN_DIR)/stdlowlevel.o $(BIN_DIR)/stddraw.o $(BIN_DIR)/stdmath.o --oformat binary
 
 libc: $(LIBC_SRC)
 	$(CC) $(CFLAGS) -c $(LIBC_DIR)/stdmem.c -o $(BIN_DIR)/stdmem.o
 	$(CC) $(CFLAGS) -c $(LIBC_DIR)/stdserialio.c -o $(BIN_DIR)/stdserialio.o
 	$(CC) $(CFLAGS) -c $(LIBC_DIR)/stdlowlevel.c -o $(BIN_DIR)/stdlowlevel.o
+	$(CC) $(CFLAGS) -c $(LIBC_DIR)/stddraw.c -o $(BIN_DIR)/stddraw.o
+	$(CC) $(CFLAGS) -c $(LIBC_DIR)/stdmath.c -o $(BIN_DIR)/stdmath.o
 
 clean:
 	del /q "$(BIN_DIR)\*.o"

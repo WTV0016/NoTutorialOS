@@ -1,20 +1,11 @@
 #include"../libc/stdserialio.h"
 #include"../libc/stdmem.h"
+#include"../libc/stddraw.h"
 
 unsigned int lfb_address;
 unsigned short* lfb;
 
 unsigned short* backBuffer;
-
-void draw_pixel(unsigned int x, unsigned int y, unsigned short color) {
-
-    backBuffer[y * 1024 + x] = color;
-}
-
-void swap()
-{
-    memcpySwap(lfb, backBuffer, 1024 * 768 / 2);
-}
 
 void kernel_main()
 {
@@ -35,36 +26,8 @@ void kernel_main()
         }
     }
 
-    serialPrintString("backbuffer set finished...");
+    drawLine(backBuffer, 0, 0, 1024, 768, 0x0000FF);
+    drawLine(backBuffer, 1, 0, 1023, 768, 0x0000FF);
 
-    swap();
-
-    serialPrintString("swap finished...");
-
-    serialPrintChar('J');
-    serialPrintString("Hello, World!");
-    serialPrintInt(69, 10);
-    serialPrintInt(105, 16);
-
-    unsigned short color = 133;
-
-    unsigned short pos = 0;
-
-    while (1)
-    {
-        pos++;
-
-        for(int i = 0; i < 1024 * 768; i++)
-        {
-            backBuffer[i] = color;
-            color++;
-        }
-
-
-        serialPrintString("Backbuffer set");
-
-        swap();
-        serialPrintString("Swapped");
-
-    }
+    swap(lfb, backBuffer);
 }
